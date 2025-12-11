@@ -27,7 +27,7 @@ def number_of_memories(source_dir):
     count = sum(1 for item in source.iterdir() if item.is_file())
     return count
 
-
+# Function to sort memories into year/month folders
 def sort_memories(source_dir, dest_dir):
 
     num = number_of_memories(source_dir)
@@ -37,12 +37,14 @@ def sort_memories(source_dir, dest_dir):
     source = Path(source_dir)
     dest = Path(dest_dir)
 
+    # Initialize progress bar
     with alive_bar(num) as bar:
 
         for item in source.iterdir():
 
             num_processed += 1
 
+            # Extract date components from filename, full_date_of_item and day_of_item are not used currently, but kept for potential future use
             full_date_of_item = item.name[0:10]
             year_of_item = item.name[0:4]
             month_of_item = item.name[5:7]
@@ -78,6 +80,7 @@ def sort_memories(source_dir, dest_dir):
 
 def main():
 
+    # change directories of source and destination here. 
     source_dir = 'memories'
     dest_dir = 'Sorted_Memories'
     
@@ -86,6 +89,7 @@ def main():
         os.makedirs(dest_dir)
         print("Creating destination directory dependencies...")
     
+    # Sort memories and handle FileNotFoundError
     try:
         sort_memories(source_dir, dest_dir)
         input("press any key to exit...")
